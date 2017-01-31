@@ -4,18 +4,14 @@ class LabelCommand
   end
   
   def valid?
-    !!matches
+    line[0] == '(' && line[-1] == ')'
   end
 
   def label
-    line[1..-2] if matches
+    line[1..-2] if valid?
   end
 
   private
 
   attr_reader :line
-
-  def matches
-    line[0] == '(' && line[-1] == ')'
-  end
 end
