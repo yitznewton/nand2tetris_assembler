@@ -19,7 +19,7 @@ To run the nand2tetris test:
 
 ```shell
 $ ./Assembler pong/Pong.asm > pong/Pong.hack       # output machine code
-$ diff pong/Pong.hack pong/Pong.hack_expected      # test against known-good
+$ diff pong/Pong.hack pong/Pong_expected.hack      # compare against known-good
 ```
 
 ## License
