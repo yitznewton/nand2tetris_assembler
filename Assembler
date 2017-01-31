@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require_relative 'lib/command'
+require_relative 'lib/line'
+require_relative 'lib/symbol_table'
+require_relative 'lib/variable_table'
+
+def each_line
+  File.foreach(ARGV[0]) do |line|
+    yield Line.new(line)
+  end
+end
+
+label_table = {}
+
+current_position = 0
+
+each_line do |line|
+  next if line.empty?
+
+  if line.label?
+    label_table[line.label] = current_position
+    next
+  end
+
+  current_position += 1
+end
+
+symbol_table = SymbolTable.new(
+  label_table: label_table,
+  variable_table: VariableTable.new
+)
+
+each_line do |line|
+  next if line.empty? || line.label?
+
+  puts Command.parse(line.command, symbol_table).to_hack
+end
